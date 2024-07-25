@@ -1,23 +1,22 @@
-name: eShopOnWeb Build and Test
+# File: .github/workflows/workflow.yml
 
-#Triggers (uncomment line below to use it)
-#on: [push, pull_request, workflow_dispatch]
+on: [push]
+
+name: Run Azure Login With a Service Principal Secret
 
 jobs:
-  build:
 
+  build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '8.0.x'
-        dotnet-quality: 'preview'
 
-    - name: Build with dotnet
-      run: dotnet build ./eShopOnWeb.sln --configuration Release
-    
-    - name: Test with dotnet
-      run: dotnet test ./eShopOnWeb.sln --configuration Release
+    - uses: azure/login@v2
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Azure CLI script
+      uses: azure/cli@v2
+      with:
+        azcliversion: latest
+        inlineScript: |
+          az account show

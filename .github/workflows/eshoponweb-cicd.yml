@@ -102,6 +102,6 @@ jobs:
       - name: Publish Website to WebApp (CLI)
         uses: Azure/cli@v2
         with:
-        azcliversion: latest
-          inlineScript:|
+          azcliversion: latest
+          inlineScript: |
              az webapp deploy --name ${{ env.WEBAPP_NAME }} --resource-group ${{ env.RESOURCE_GROUP }} --src-path .net-app/app.zip --type zip
